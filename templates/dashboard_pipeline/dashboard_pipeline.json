@@ -1,0 +1,289 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"csv_linkedservice": {
+			"type": "string"
+		},
+		"synapse_linkedservicd": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/dashboard_pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "poc_pipeline",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowCopyCommand": true
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "transactions_csv",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dashdwh",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-02-05T07:18:58Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/transactions_csv')]",
+				"[concat(variables('factoryId'), '/datasets/dashdwh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/transactions_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('csv_linkedservice')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "transactions_database.csv",
+						"container": "storage-container"
+					},
+					"columnDelimiter": ",",
+					"rowDelimiter": "\r",
+					"escapeChar": "\"",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "date_of_sale",
+						"type": "String"
+					},
+					{
+						"name": "street",
+						"type": "String"
+					},
+					{
+						"name": "area",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					},
+					{
+						"name": "district",
+						"type": "String"
+					},
+					{
+						"name": "sale_price",
+						"type": "String"
+					},
+					{
+						"name": "land_area_sqft",
+						"type": "String"
+					},
+					{
+						"name": "builtup_area_sqft",
+						"type": "String"
+					},
+					{
+						"name": "property_category",
+						"type": "String"
+					},
+					{
+						"name": "building_type",
+						"type": "String"
+					},
+					{
+						"name": "floors",
+						"type": "String"
+					},
+					{
+						"name": "lot_no",
+						"type": "String"
+					},
+					{
+						"name": "lot_status",
+						"type": "String"
+					},
+					{
+						"name": "lot_type",
+						"type": "String"
+					},
+					{
+						"name": "title_no",
+						"type": "String"
+					},
+					{
+						"name": "ownership_type",
+						"type": "String"
+					},
+					{
+						"name": "share",
+						"type": "String"
+					},
+					{
+						"name": "analysis_by_share_sqft",
+						"type": "String"
+					},
+					{
+						"name": "rooms",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dashdwh')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('synapse_linkedservicd')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "date_of_sale",
+						"type": "date"
+					},
+					{
+						"name": "street",
+						"type": "varchar"
+					},
+					{
+						"name": "area",
+						"type": "varchar"
+					},
+					{
+						"name": "city",
+						"type": "varchar"
+					},
+					{
+						"name": "district",
+						"type": "varchar"
+					},
+					{
+						"name": "sale_price",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "land_area_sqft",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "builtup_area_sqft",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "property_category",
+						"type": "varchar"
+					},
+					{
+						"name": "building_type",
+						"type": "varchar"
+					},
+					{
+						"name": "floors",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "lot_no",
+						"type": "varchar"
+					},
+					{
+						"name": "lot_status",
+						"type": "varchar"
+					},
+					{
+						"name": "lot_type",
+						"type": "varchar"
+					},
+					{
+						"name": "title_no",
+						"type": "varchar"
+					},
+					{
+						"name": "ownership_type",
+						"type": "varchar"
+					},
+					{
+						"name": "share",
+						"type": "varchar"
+					},
+					{
+						"name": "analysis_by_share_sqft",
+						"type": "varchar"
+					},
+					{
+						"name": "rooms",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "transactions_database"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
