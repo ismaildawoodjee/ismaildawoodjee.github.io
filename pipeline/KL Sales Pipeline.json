@@ -1,0 +1,240 @@
+{
+	"name": "KL Sales Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy-kl-sales",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "DELETE FROM kl_sales",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "date_of_sale",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "date_of_sale",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "street",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "street",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "area",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "area",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "city",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "city",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "sale_price",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sale_price",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "land_area_sqft",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "land_area_sqft",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "builtup_area_sqft",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "builtup_area_sqft",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "building_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "building_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "floors",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "floors",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 5
+								}
+							},
+							{
+								"source": {
+									"name": "lot_status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "lot_status",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "lot_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "lot_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ownership_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ownership_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "lease_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "lease_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rooms",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rooms",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 5
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "kl_sales_to_sql",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "kl_sales_sql",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-01-31T17:52:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

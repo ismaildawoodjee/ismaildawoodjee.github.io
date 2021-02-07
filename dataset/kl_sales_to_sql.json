@@ -1,0 +1,81 @@
+{
+	"name": "kl_sales_to_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "kl_sales_to_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "kl_filtered.csv",
+				"container": "storage-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "date_of_sale",
+				"type": "String"
+			},
+			{
+				"name": "street",
+				"type": "String"
+			},
+			{
+				"name": "area",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			},
+			{
+				"name": "sale_price",
+				"type": "String"
+			},
+			{
+				"name": "land_area_sqft",
+				"type": "String"
+			},
+			{
+				"name": "builtup_area_sqft",
+				"type": "String"
+			},
+			{
+				"name": "building_type",
+				"type": "String"
+			},
+			{
+				"name": "floors",
+				"type": "String"
+			},
+			{
+				"name": "lot_status",
+				"type": "String"
+			},
+			{
+				"name": "lot_type",
+				"type": "String"
+			},
+			{
+				"name": "ownership_type",
+				"type": "String"
+			},
+			{
+				"name": "lease_type",
+				"type": "String"
+			},
+			{
+				"name": "rooms",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

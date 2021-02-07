@@ -1,0 +1,83 @@
+{
+	"name": "kl_sales_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "kl_sales_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "date_of_sale",
+				"type": "date"
+			},
+			{
+				"name": "street",
+				"type": "varchar"
+			},
+			{
+				"name": "area",
+				"type": "varchar"
+			},
+			{
+				"name": "city",
+				"type": "varchar"
+			},
+			{
+				"name": "sale_price",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "land_area_sqft",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "builtup_area_sqft",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "building_type",
+				"type": "varchar"
+			},
+			{
+				"name": "floors",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "lot_status",
+				"type": "varchar"
+			},
+			{
+				"name": "lot_type",
+				"type": "varchar"
+			},
+			{
+				"name": "ownership_type",
+				"type": "varchar"
+			},
+			{
+				"name": "lease_type",
+				"type": "varchar"
+			},
+			{
+				"name": "rooms",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "kl_sales"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
