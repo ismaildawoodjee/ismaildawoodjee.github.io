@@ -1,9 +1,9 @@
 {
-	"name": "KL Sales Pipeline",
+	"name": "Transactions Pipeline",
 	"properties": {
 		"activities": [
 			{
-				"name": "copy-kl-sales",
+				"name": "copy-transactions",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -27,9 +27,7 @@
 						}
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"preCopyScript": "DELETE FROM kl_sales",
-						"disableMetricsCollection": false
+						"type": "AzureSqlSink"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -85,14 +83,28 @@
 							},
 							{
 								"source": {
+									"name": "district",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "district",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
 									"name": "sale_price",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
 									"name": "sale_price",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 15
 								}
 							},
 							{
@@ -125,6 +137,18 @@
 							},
 							{
 								"source": {
+									"name": "property_category",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "property_category",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
 									"name": "building_type",
 									"type": "String",
 									"physicalType": "String"
@@ -146,7 +170,19 @@
 									"type": "Decimal",
 									"physicalType": "decimal",
 									"scale": 2,
-									"precision": 5
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "lot_no",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "lot_no",
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -175,6 +211,18 @@
 							},
 							{
 								"source": {
+									"name": "title_no",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "title_no",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
 									"name": "ownership_type",
 									"type": "String",
 									"physicalType": "String"
@@ -187,12 +235,24 @@
 							},
 							{
 								"source": {
-									"name": "lease_type",
+									"name": "share",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "lease_type",
+									"name": "share",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "analysis_by_share_sqft",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "analysis_by_share_sqft",
 									"type": "String",
 									"physicalType": "varchar"
 								}
@@ -208,7 +268,7 @@
 									"type": "Decimal",
 									"physicalType": "decimal",
 									"scale": 2,
-									"precision": 5
+									"precision": 15
 								}
 							}
 						],
@@ -221,13 +281,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "kl_sales_to_sql",
+						"referenceName": "transactions_data",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "kl_sales_sql",
+						"referenceName": "sql_transactions_database",
 						"type": "DatasetReference"
 					}
 				]
