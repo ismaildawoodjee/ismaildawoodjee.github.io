@@ -1,0 +1,103 @@
+{
+	"name": "sql_transactions_database",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_database_linkedservice",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "date_of_sale",
+				"type": "date"
+			},
+			{
+				"name": "street",
+				"type": "varchar"
+			},
+			{
+				"name": "area",
+				"type": "varchar"
+			},
+			{
+				"name": "city",
+				"type": "varchar"
+			},
+			{
+				"name": "district",
+				"type": "varchar"
+			},
+			{
+				"name": "sale_price",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "land_area_sqft",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "builtup_area_sqft",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "property_category",
+				"type": "varchar"
+			},
+			{
+				"name": "building_type",
+				"type": "varchar"
+			},
+			{
+				"name": "floors",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "lot_no",
+				"type": "varchar"
+			},
+			{
+				"name": "lot_status",
+				"type": "varchar"
+			},
+			{
+				"name": "lot_type",
+				"type": "varchar"
+			},
+			{
+				"name": "title_no",
+				"type": "varchar"
+			},
+			{
+				"name": "ownership_type",
+				"type": "varchar"
+			},
+			{
+				"name": "share",
+				"type": "varchar"
+			},
+			{
+				"name": "analysis_by_share_sqft",
+				"type": "varchar"
+			},
+			{
+				"name": "rooms",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "transactions_database"
+		}
+	}
+}
