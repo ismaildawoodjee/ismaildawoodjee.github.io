@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "aduka-data-factory"
+		},
+		"csv_linkedservice_connectionString": {
+			"value": ""
+		},
+		"kl_sales_sql_connectionString": {
+			"value": ""
+		},
+		"kl_sales_to_sql_connectionString": {
+			"value": ""
+		},
+		"synapse_linkedservicd_connectionString": {
+			"value": ""
+		},
+		"sql_database_linkedservice_connectionString": {
+			"value": ""
+		}
+	}
+}

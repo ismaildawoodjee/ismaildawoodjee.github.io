@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "aduka-data-factory"
+		},
+		"csv_linkedservice_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'csv_linkedservice'"
+		},
+		"kl_sales_sql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'kl_sales_sql'"
+		},
+		"kl_sales_to_sql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'kl_sales_to_sql'"
+		},
+		"synapse_linkedservicd_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'synapse_linkedservicd'"
+		},
+		"sql_database_linkedservice_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'sql_database_linkedservice'"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "aduka-data-factory_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"csv_linkedservice_connectionString": {
+						"value": "[parameters('csv_linkedservice_connectionString')]"
+					},
+					"kl_sales_sql_connectionString": {
+						"value": "[parameters('kl_sales_sql_connectionString')]"
+					},
+					"kl_sales_to_sql_connectionString": {
+						"value": "[parameters('kl_sales_to_sql_connectionString')]"
+					},
+					"synapse_linkedservicd_connectionString": {
+						"value": "[parameters('synapse_linkedservicd_connectionString')]"
+					},
+					"sql_database_linkedservice_connectionString": {
+						"value": "[parameters('sql_database_linkedservice_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

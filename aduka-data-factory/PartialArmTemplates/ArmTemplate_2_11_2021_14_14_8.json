@@ -1,0 +1,530 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "aduka-data-factory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Transactions Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy-transactions",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "date_of_sale",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "date_of_sale",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "street",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "street",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "area",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "area",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "city",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "city",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "district",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "district",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "sale_price",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "sale_price",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 15
+										}
+									},
+									{
+										"source": {
+											"name": "land_area_sqft",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "land_area_sqft",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 15
+										}
+									},
+									{
+										"source": {
+											"name": "builtup_area_sqft",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "builtup_area_sqft",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 15
+										}
+									},
+									{
+										"source": {
+											"name": "property_category",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "property_category",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "building_type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "building_type",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "floors",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "floors",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 15
+										}
+									},
+									{
+										"source": {
+											"name": "lot_no",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "lot_no",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "lot_status",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "lot_status",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "lot_type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "lot_type",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "title_no",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "title_no",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ownership_type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ownership_type",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "share",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "share",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "analysis_by_share_sqft",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "analysis_by_share_sqft",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "rooms",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "rooms",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 15
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "transactions_data",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sql_transactions_database",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-01-31T17:52:03Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/transactions_data')]",
+				"[concat(variables('factoryId'), '/datasets/sql_transactions_database')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/transactions_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv_linkedservice",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "transactions_database.csv",
+						"container": "storage-container"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\"",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "date_of_sale",
+						"type": "String"
+					},
+					{
+						"name": "street",
+						"type": "String"
+					},
+					{
+						"name": "area",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					},
+					{
+						"name": "district",
+						"type": "String"
+					},
+					{
+						"name": "sale_price",
+						"type": "String"
+					},
+					{
+						"name": "land_area_sqft",
+						"type": "String"
+					},
+					{
+						"name": "builtup_area_sqft",
+						"type": "String"
+					},
+					{
+						"name": "property_category",
+						"type": "String"
+					},
+					{
+						"name": "building_type",
+						"type": "String"
+					},
+					{
+						"name": "floors",
+						"type": "String"
+					},
+					{
+						"name": "lot_no",
+						"type": "String"
+					},
+					{
+						"name": "lot_status",
+						"type": "String"
+					},
+					{
+						"name": "lot_type",
+						"type": "String"
+					},
+					{
+						"name": "title_no",
+						"type": "String"
+					},
+					{
+						"name": "ownership_type",
+						"type": "String"
+					},
+					{
+						"name": "share",
+						"type": "String"
+					},
+					{
+						"name": "analysis_by_share_sqft",
+						"type": "String"
+					},
+					{
+						"name": "rooms",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sql_transactions_database')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sql_database_linkedservice",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "date_of_sale",
+						"type": "date"
+					},
+					{
+						"name": "street",
+						"type": "varchar"
+					},
+					{
+						"name": "area",
+						"type": "varchar"
+					},
+					{
+						"name": "city",
+						"type": "varchar"
+					},
+					{
+						"name": "district",
+						"type": "varchar"
+					},
+					{
+						"name": "sale_price",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "land_area_sqft",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "builtup_area_sqft",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "property_category",
+						"type": "varchar"
+					},
+					{
+						"name": "building_type",
+						"type": "varchar"
+					},
+					{
+						"name": "floors",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "lot_no",
+						"type": "varchar"
+					},
+					{
+						"name": "lot_status",
+						"type": "varchar"
+					},
+					{
+						"name": "lot_type",
+						"type": "varchar"
+					},
+					{
+						"name": "title_no",
+						"type": "varchar"
+					},
+					{
+						"name": "ownership_type",
+						"type": "varchar"
+					},
+					{
+						"name": "share",
+						"type": "varchar"
+					},
+					{
+						"name": "analysis_by_share_sqft",
+						"type": "varchar"
+					},
+					{
+						"name": "rooms",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "transactions_database"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
